@@ -1,6 +1,21 @@
 function gradingStudents(grades) {
-    const value = getNextMultiplos({ value: 73, multiplo: 5});
-    console.log('Proximo valor que é multiplo', value);
+    const roundedGrades = [];
+    grades.forEach(grade => {
+        const gradeWithRole = applyRole({ grade });
+        roundedGrades.push(gradeWithRole);
+    });
+
+    return roundedGrades;
+}
+
+function applyRole({ grade }) {
+    if (grade < 38) return grade;
+    else {
+        const roundedGrade = getNextMultiplos({ value: grade, multiplo: 5})
+        if (roundedGrade - grade > 3) return grade;
+        else if (roundedGrade - grade < 3) return roundedGrade;
+        else return grade;
+    }
 }
 
 function getNextMultiplos({ value, multiplo}) {
@@ -8,9 +23,8 @@ function getNextMultiplos({ value, multiplo}) {
         if (nextNumber % multiplo) {
             return getNextMultiplos({ value: nextNumber, multiplo});
         } else {
-            console.log('Estou retornando', nextNumber)
             return nextNumber;
         }
 }
 
-gradingStudents()
+gradingStudents([73, 67, 38, 33]);
